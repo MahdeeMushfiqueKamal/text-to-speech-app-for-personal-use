@@ -1,5 +1,6 @@
 # Import the required libraries
 import os
+from datetime import date
 from flask import Flask, render_template, request, redirect
 from google.cloud import texttospeech
 
@@ -8,6 +9,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/mmk/codes/text_to_speech_m
 
 # Set up the Flask app
 app = Flask(__name__)
+global_input_text = ""
 
 # Set up the Text-to-Speech client
 client = texttospeech.TextToSpeechClient()
@@ -15,13 +17,15 @@ client = texttospeech.TextToSpeechClient()
 # Define the home route
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', global_input_text=global_input_text)
 
 # Define the text-to-speech route
 @app.route('/tts', methods=['POST'])
 def tts():
     # Get the input text from the form
     input_text = request.form['input_text']
+    global global_input_text
+    global_input_text = input_text
 
     # Set up the synthesis input
     synthesis_input = texttospeech.SynthesisInput(text=input_text)
