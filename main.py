@@ -5,7 +5,9 @@ from flask import Flask, render_template, request, redirect
 from google.cloud import texttospeech
 
 # Set up the authentication credentials
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/home/mmk/codes/text_to_speech_mahdee/mobile-doc-key.json'
+os.environ[
+    "GOOGLE_APPLICATION_CREDENTIALS"
+] = "/home/mmk/codes/text_to_speech_mahdee/mobile-doc-key.json"
 
 # Set up the Flask app
 app = Flask(__name__)
@@ -15,15 +17,16 @@ global_input_text = ""
 client = texttospeech.TextToSpeechClient()
 
 # Define the home route
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('index.html', global_input_text=global_input_text)
+    return render_template("index.html", global_input_text=global_input_text)
+
 
 # Define the text-to-speech route
-@app.route('/tts', methods=['POST'])
+@app.route("/tts", methods=["POST"])
 def tts():
     # Get the input text from the form
-    input_text = request.form['input_text']
+    input_text = request.form["input_text"]
     global global_input_text
     global_input_text = input_text
 
@@ -46,12 +49,12 @@ def tts():
     )
 
     # Save the response to a file
-    with open('static/output.mp3', 'wb') as out:
+    with open("static/output.mp3", "wb") as out:
         out.write(response.audio_content)
 
     # Return the file as a response to the request
-    return redirect('/')
+    return redirect("/")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
