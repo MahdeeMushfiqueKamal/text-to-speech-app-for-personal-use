@@ -1,20 +1,18 @@
 # Import the required libraries
 import os
-from datetime import date
+import traceback
 from flask import Flask, render_template, request, redirect
 from google.cloud import texttospeech
 
-# Set up the authentication credentials
-os.environ[
-    "GOOGLE_APPLICATION_CREDENTIALS"
-] = "/home/mmk/codes/text_to_speech_mahdee/mobile-doc-key.json"
+# # # Set up the authentication credentials
+# os.environ[
+#     "GOOGLE_APPLICATION_CREDENTIALS"
+# ] = "/home/mmk/codes/text_to_speech_mahdee/mobile-doc-key.json"
 
 # Set up the Flask app
 app = Flask(__name__)
 global_input_text = ""
 
-# Set up the Text-to-Speech client
-client = texttospeech.TextToSpeechClient()
 
 # Define the home route
 @app.route("/")
@@ -25,6 +23,12 @@ def home():
 # Define the text-to-speech route
 @app.route("/tts", methods=["POST"])
 def tts():
+    try:
+        # # Set up the Text-to-Speech client
+        client = texttospeech.TextToSpeechClient()
+    except: 
+        return f"<p> {traceback.print_exc()} </p>"
+    
     # Get the input text from the form
     input_text = request.form["input_text"]
     global global_input_text
@@ -49,7 +53,7 @@ def tts():
     )
 
     # Save the response to a file
-    with open("static/output.mp3", "wb") as out:
+    with open("/tmp/output.mp3", "wb") as out:
         out.write(response.audio_content)
 
     # Return the file as a response to the request
