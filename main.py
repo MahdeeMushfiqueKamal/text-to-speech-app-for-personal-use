@@ -67,7 +67,7 @@ def tts():
 
     # Set up the voice parameters
     voice = texttospeech.VoiceSelectionParams(
-        language_code="en-US", 
+        language_code=f"en-{dialect_name}", 
         name= f'en-{dialect_name}-Wavenet-{voice_name}'
     )
 
