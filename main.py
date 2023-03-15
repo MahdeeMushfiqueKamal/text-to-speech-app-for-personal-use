@@ -56,6 +56,7 @@ def tts():
     
     # Get the input text from the form
     input_text = request.form["input_text"]
+    voice_name = request.form['voice']
     global global_input_text
     global_input_text = input_text
 
@@ -64,7 +65,8 @@ def tts():
 
     # Set up the voice parameters
     voice = texttospeech.VoiceSelectionParams(
-        language_code="en-US", ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL
+        language_code="en-US", 
+        name= f'en-US-Standard-{voice_name}'
     )
 
     # Set up the audio file parameters

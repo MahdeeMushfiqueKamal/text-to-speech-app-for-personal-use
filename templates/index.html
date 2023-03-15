@@ -1,104 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text-to-Speech App by Mahdee</title>
-    <!-- Link to Bootstrap CSS file -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <style>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Text-to-Speech App by Mahdee</title>
+	<!-- Link to Bootstrap CSS file -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+	<style>
 		/* Custom CSS styles */
 		body {
-		  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-		  background-color: #f5f8fa;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f5f8fa;
 		}
+
 		.container {
-		  max-width: 600px;
-		  margin: 50px auto 0;
-		  padding: 20px;
-		  background-color: #ffffff;
-		  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-		  border-radius: 10px;
+			max-width: 600px;
+			margin: 50px auto 0;
+			padding: 20px;
+			background-color: #ffffff;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+			border-radius: 10px;
 		}
+
 		h1 {
-		  font-size: 2.5rem;
-		  margin-top: 0;
-		  margin-bottom: 1.5rem;
-		  text-align: center;
-		  color: #1da1f2;
-		  font-weight: bold;
+			font-size: 2.5rem;
+			margin-top: 0;
+			margin-bottom: 1.5rem;
+			text-align: center;
+			color: #1da1f2;
+			font-weight: bold;
 		}
+
 		label {
-		  font-weight: bold;
-		  margin-bottom: 0.5rem;
-		  color: #1da1f2;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+			color: #000000;
 		}
+
 		textarea {
-		  height: 200px;
-		  font-size: 1.2rem;
-		  padding: 10px;
-		  border: 1px solid #ced4da;
-		  border-radius: 5px;
-		  resize: none;
+			height: 200px;
+			font-size: 1.2rem;
+			padding: 10px;
+			border: 1px solid #ced4da;
+			border-radius: 5px;
+			resize: none;
 		}
+
 		input[type="submit"] {
-		  background-color: #1da1f2;
-		  border: none;
-		  color: #ffffff;
-		  padding: 10px 20px;
-		  border-radius: 5px;
-		  font-size: 1.2rem;
-		  cursor: pointer;
-		  transition: background-color 0.3s ease;
+			background-color: #1da1f2;
+			border: none;
+			color: #ffffff;
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-size: 1.2rem;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
 		}
+
 		input[type="submit"]:hover {
-		  background-color: #0c8de4;
+			background-color: #0c8de4;
 		}
+
 		audio {
-		  display: block;
-		  margin: 20px auto;
+			display: block;
+			margin: 20px auto;
 		}
+
 		p {
-		  color: #000203;
+			color: #000203;
 		}
+
 		footer {
-		  margin-top: 50px;
-		  border-top: 1px solid #e6ecf0;
-		  padding: 20px 0;
-		  text-align: center;
-		  color: #aab8c2;
+			margin-top: 50px;
+			border-top: 1px solid #e6ecf0;
+			padding: 20px 0;
+			text-align: center;
+			color: #aab8c2;
 		}
+
 		footer a {
-		  color: #1da1f2;
+			color: #1da1f2;
 		}
-	  </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Text-to-Speech App</h1>
-      <form method="POST" action="/tts">
-        <div class="form-group">
-          <label for="input_text">Input Text:</label>
-          <textarea id="input_text" name="input_text" class="form-control" rows="4"></textarea>
-        </div>
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Text-to-Speech App</h1>
+		<form method="POST" action="/tts">
+			<div class="form-group">
+				<label for="input_text">Input Text:</label>
+				<textarea id="input_text" name="input_text" class="form-control" rows="4"></textarea>
+				<br>
+
+				<label for="voice">voice:</label>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="A" value="A">
+					<label class="form-check-label" for="A">A</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="B" value="B">
+					<label class="form-check-label" for="B">B</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="C" value="C">
+					<label class="form-check-label" for="C">C</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="D" value="D">
+					<label class="form-check-label" for="D">D</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="E" value="E">
+					<label class="form-check-label" for="E">E</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="F" value="F" checked>
+					<label class="form-check-label" for="F">F</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="G" value="G">
+					<label class="form-check-label" for="G">G</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="voice" id="H" value="H">
+					<label class="form-check-label" for="H">H</label>
+				</div>
+
+
+				<br>
+			</div>
+			<br>
+			<input type="submit" value="Convert to Speech" class="btn btn-primary">
+			<br>
+		</form>
 		<br>
-        <input type="submit" value="Convert to Speech" class="btn btn-primary">
-		<br>
-      </form>
-	  <br>
-      <p class="text-center">Click the play button to listen to the last converted sound:</p>
-      <audio controls>
-        <!-- <source src="{{url_for('static', filename='output.mp3')}}" type="audio/mpeg">  -->
-		<source src="{{ global_audio_url }}?v={{ range(1000)|random }}" type="audio/mpeg">
-      </audio>
-	  <p> {{global_input_text}}</p>
-    </div>
-    <!-- Link to Bootstrap JavaScript file -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+		<p class="text-center">Click the play button to listen to the last converted sound:</p>
+		<audio controls>
+			<!-- <source src="{{url_for('static', filename='output.mp3')}}" type="audio/mpeg">  -->
+			<source src="{{ global_audio_url }}?v={{ range(1000)|random }}" type="audio/mpeg">
+		</audio>
+		<p> {{global_input_text}}</p>
+	</div>
+	<!-- Link to Bootstrap JavaScript file -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 	<footer>
 		<hr>
 		<p class="text-center">Text-to-Speech App &copy; 2023. Created by Mahdee Mushfique Kamal.</p>
-	  </footer>
-  </body>
+	</footer>
+</body>
+
 </html>
