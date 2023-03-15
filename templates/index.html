@@ -89,7 +89,7 @@
       <p class="text-center">Click the play button to listen to the last converted sound:</p>
       <audio controls>
         <!-- <source src="{{url_for('static', filename='output.mp3')}}" type="audio/mpeg">  -->
-		<source src="{{url_for('static', filename='output.mp3')}}?v={{ range(1000)|random }}" type="audio/mpeg">
+		<source src="{{ global_audio_url }}?v={{ range(1000)|random }}" type="audio/mpeg">
       </audio>
 	  <p> {{global_input_text}}</p>
     </div>
