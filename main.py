@@ -4,6 +4,7 @@ import traceback
 from flask import Flask, render_template, request, redirect
 from google.cloud import texttospeech
 from google.cloud import storage
+from google.cloud import logging
 
 # # Set up the authentication credentials
 os.environ[
@@ -12,6 +13,8 @@ os.environ[
 
 # define your bucket name
 bucket_name = 'sunny-bastion-375508.appspot.com'
+logger_client = logging.Client()
+logger = logger_client.logger("Text_to_speech_app")
 
 
 # Set up the Flask app
@@ -22,26 +25,34 @@ global_audio_url = ""
 # Define the home route
 @app.route("/")
 def home():
+    logger.log_text('Home endpoint is called', severity = "INFO")
     return render_template("index.html", global_input_text=global_input_text, global_audio_url=global_audio_url)
 
 
 # Define the text-to-speech route
 @app.route("/tts", methods=["POST"])
 def tts():
+    logger.log_text('tts function is called', severity = "INFO")
     try:
         # # Set up the Text-to-Speech client
         client = texttospeech.TextToSpeechClient()
     except: 
-        return f"<p> {traceback.print_exc()} </p>"
+        logger.log_text('Could not create tts client', severity='CRITICAL')
+        return redirect("/")
     
-    ## Create a Cloud Storage client
-    storage_client = storage.Client()
+    
+    try:
+        ## Create a Cloud Storage client
+        storage_client = storage.Client()
 
-    # Get the Cloud Storage bucket that you want to use
-    bucket = storage_client.bucket(bucket_name)
+        # Get the Cloud Storage bucket that you want to use
+        bucket = storage_client.bucket(bucket_name)
 
-    # Create a new Blob and specify the audio file name
-    blob = bucket.blob('output.mp3')
+        # Create a new Blob and specify the audio file name
+        blob = bucket.blob('output.mp3')
+    except:
+        logger.log_text('Could not Blob', severity='CRITICAL')
+        return redirect("/")    
     
     # Get the input text from the form
     input_text = request.form["input_text"]

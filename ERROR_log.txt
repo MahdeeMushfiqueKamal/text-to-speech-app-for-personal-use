@@ -1,1 +1,0 @@
-:  OSError: [Errno 30] Read-only file system: 'static/output.mp3'
