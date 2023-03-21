@@ -56,6 +56,7 @@ def tts():
     
     # Get the input text from the form
     input_text = request.form["input_text"]
+    input_text = input_text.replace('-\n', "")
     voice_name = request.form['voice']
     dialect_name = request.form['dialect']
 
